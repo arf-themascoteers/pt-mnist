@@ -25,7 +25,23 @@ def train():
         for data, y_true in dataloader:
             optimizer.zero_grad()
             y_pred = model(data)
+
+            actual_output = y_true[0].item()
+            print("\n\nActual Output")
+            print(actual_output)
+
+            confidence_for_actual_output = y_pred[0][actual_output].item()
+            print(f"\n\nConfidence for {actual_output}")
+            print(confidence_for_actual_output)
+
+            print("\n\nCalculated Loss")
+            print(-confidence_for_actual_output)
+
             loss = F.nll_loss(y_pred, y_true)
+            print("\n\nActual Loss")
+            print(loss)
+            exit(0)
+
             loss.backward()
             optimizer.step()
             print(f'Epoch:{epoch + 1}, Loss:{loss.item():.4f}')

@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
@@ -20,4 +21,29 @@ class SimpleNet(nn.Module):
 
     def forward(self, x):
         x = self.net(x)
-        return F.log_softmax(x, dim=1)
+        outputs = x[0]
+
+        print("Outputs")
+        print(outputs)
+
+        print("\n\n e^Outputs")
+        print(torch.exp(outputs))
+
+        sum_outputs = torch.sum(torch.exp(outputs))
+        print("\n\nSum e(Outputs)")
+        print(sum_outputs)
+
+        manual_softmax = torch.exp(outputs / sum_outputs)
+        print("\n\nManually Calculated Softmax")
+        print(manual_softmax)
+
+        print("\n\nActual Softmax")
+        print(F.softmax(x, dim=1))
+
+        print("\n\nManually Calculated LogSoftmax")
+        print(torch.log(manual_softmax))
+
+        x = F.log_softmax(x, dim=1)
+        print("\n\nActual Log Softmax")
+        print(x[0])
+        return x
