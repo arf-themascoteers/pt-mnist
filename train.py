@@ -7,7 +7,7 @@ from torchvision.transforms import ToTensor
 
 def train():
     NUM_EPOCHS = 3
-    BATCH_SIZE = 1000
+    BATCH_SIZE = 1
 
     working_set = datasets.MNIST(
         root='data',
@@ -16,7 +16,7 @@ def train():
         download=True,
     )
 
-    dataloader = DataLoader(working_set, batch_size=BATCH_SIZE, shuffle=True)
+    dataloader = DataLoader(working_set, batch_size=BATCH_SIZE, shuffle=False)
     model = SimpleNet()
     model.train()
     optimizer = torch.optim.Adam(model.parameters(), lr=1e-3, weight_decay=1e-5)
